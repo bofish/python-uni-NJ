@@ -11,10 +11,11 @@ class mainFrame(wx.Frame):
 		search_label = wx.StaticText(self.panel, label="Stock Code:")
 		search_input = wx.TextCtrl(self.panel)
 		
-		self.stockls = wx.ListCtrl(self.panel, size=(-1,100), style=wx.LC_REPORT|wx.BORDER_SUNKEN)
+		self.stockls = wx.ListCtrl(self.panel, size=(-1,500), style=wx.LC_REPORT)
 		self.stockls.InsertColumn(0, 'Symbol')
-		self.stockls.InsertColumn(1, 'Name')
+		self.stockls.InsertColumn(1, 'Name', width=200)
 		self.stockls.InsertColumn(2, 'FTM')
+		self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.StoClick, self.stockls)
 
 
 		quit_btn = wx.Button(self.panel, label='Quit')
@@ -31,7 +32,7 @@ class mainFrame(wx.Frame):
 		searchSizer.Add(search_label, 0, wx.ALL, 5)
 		searchSizer.Add(search_input, 0, wx.ALL|wx.EXPAND, 5)
 
-		tableSizer.Add(self.stockls, 1, wx.EXPAND)
+		tableSizer.Add(self.stockls, 1, wx.ALL|wx.EXPAND, 5)
 
 		btnSizer.Add(quit_btn, 0, wx.ALL, 5)
 		btnSizer.Add(re_btn, 0, wx.ALL, 5)
@@ -55,6 +56,9 @@ class mainFrame(wx.Frame):
 			self.stockls.InsertItem(index, stock['symbol'])
 			self.stockls.SetItem(index, 1, stock['longName'])
 			self.stockls.SetItem(index, 2, stock['regularMarketPrice']['fmt'])
+
+	def StoClick(self, event):
+		print("yayaya")
 
 if __name__ == '__main__':
 	app = wx.App()
