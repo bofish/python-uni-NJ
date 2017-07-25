@@ -1,6 +1,7 @@
 import wx
 from urllib.request import urlopen
 import json
+import myPK.config as cf
 
 # crate main view
 class mainFrame(wx.Frame):
@@ -8,7 +9,7 @@ class mainFrame(wx.Frame):
 		wx.Frame.__init__(self, parent=superior, title='Dow Jones Stock')
 		self.panel = wx.Panel(self)
 
-		search_label = wx.StaticText(self.panel, label="Stock Code:")
+		search_label = wx.StaticText(self.panel, label='Stock Code:')
 		search_input = wx.TextCtrl(self.panel)
 		
 		self.stockls = wx.ListCtrl(self.panel, size=(-1,500), style=wx.LC_REPORT)
@@ -58,7 +59,15 @@ class mainFrame(wx.Frame):
 			self.stockls.SetItem(index, 2, stock['regularMarketPrice']['fmt'])
 
 	def StoClick(self, event):
-		print("yayaya")
+		print('yayaya')
+		
+		count = event.GetIndex()
+		stoSymbol = self.stockls.GetItem(itemIdx=count).GetText()
+		# print(stoSymbol)
+		if __name__ == '__main__':
+			cf.ConfSST(stoSymbol)
+		
+
 
 if __name__ == '__main__':
 	app = wx.App()
